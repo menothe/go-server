@@ -45,7 +45,7 @@ func createProductHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	newProduct.Id = uuid.New()
-	fmt.Println(*newProduct)
+	fmt.Println("product created: ", *newProduct)
 }
 
 func main() {
