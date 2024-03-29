@@ -12,6 +12,7 @@ func main() {
 
 	// Register handlers for specific routes
 	mux.HandleFunc("GET /product", handlers.GetProductHandler)
+	mux.HandleFunc("DELETE /product/{id}", handlers.DeleteProductHandler)
 	mux.HandleFunc("POST /product", handlers.CreateProductHandler)
 	mux.HandleFunc("GET /products", handlers.FetchAllProductsHandler)
 

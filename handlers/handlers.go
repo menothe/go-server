@@ -67,6 +67,37 @@ func FetchAllProductsHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("all products: ", products)
 }
 
+func DeleteProductHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+
+	var products []Product
+
+	err := readUsersFromFile(&products, "./products.json")
+	if err != nil {
+		fmt.Println("Error reading data from file:", err)
+		return
+	}
+
+	for index, product := range products {
+		if product.Id.String() == id {
+			products = append(products[:index], products[index+1:]...)
+			break
+		}
+	}
+	fmt.Printf("deleted product with id %s \n", id)
+
+	data, err := json.Marshal(products)
+	if err != nil {
+		fmt.Println("Error marshalling data:", err)
+		return
+	}
+	err = os.WriteFile("./products.json", data, 0644)
+	if err != nil {
+		fmt.Println("Error writing data to file:", err)
+		return
+	}
+}
+
 // Helper function to read existing data (modify as needed)
 func readUsersFromFile(products *[]Product, filename string) error {
 	b, err := os.ReadFile(filename)
